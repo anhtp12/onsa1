@@ -1,0 +1,25 @@
+// ... باقي الكود كما هو
+
+// إرسال الصورة إلى الخادم بعد التقاطها
+const uploadImage = async (dataUrl) => {
+    const response = await fetch('http://your-server-url/upload', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: dataUrl }),
+    });
+    const result = await response.text();
+    console.log(result);
+};
+
+// التقاط الصورة عند الضغط على الزر
+document.getElementById('capture').addEventListener('click', () => {
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // تحويل الصورة إلى بيانات URL
+    const dataUrl = canvas.toDataURL('image/png');
+    uploadImage(dataUrl); // إرسال الصورة إلى الخادم
+});
